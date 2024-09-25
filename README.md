@@ -12,7 +12,7 @@
 Clone pdfparser
 
 ```bash
-git clone https://github.com/Prak-NodeJs/nasa_apod.git
+git clone https://github.com/Prak-NodeJs/pdfparser.git
 ```
 
 **Step 2.**
