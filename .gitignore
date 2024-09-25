@@ -1,3 +1,4 @@
 /node_modules
 .env
 tika-server-standard-2.2.1.jar
+/outputs

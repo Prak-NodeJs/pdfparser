@@ -42,7 +42,7 @@ const parsePdf = async (req, res, next) => {
             const directory = await unzipper.Open.file(outputZipFile);
 
             if (!fs.existsSync(outPutPath)) {
-                fs.mkdirSync(outPutPath);
+                fs.mkdirSync(outPutPath, {recursive:true});
             }
 
             for (const file of directory.files) {
