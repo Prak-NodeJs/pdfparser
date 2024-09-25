@@ -29,7 +29,7 @@ const upload = multer({
 });
 
 const uploadFile = (req, res, next) => {
-    upload.single('file')(req, res, function (err) {
+    upload.fields([{ name: 'file', maxCount: 1 }])(req, res, function (err) {
         if (err) {
             return res.status(400).json({ 
                 success:false,

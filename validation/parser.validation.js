@@ -1,6 +1,14 @@
 const Joi = require('joi')
 
-const validateRequest= {
+
+const validatePdfRequest= {
+    body: Joi.object()
+      .keys({
+          password:Joi.string()
+      }),
+  };
+
+const validateWebRequest= {
   body: Joi.object()
     .keys({
         webUrl: Joi.string()
@@ -14,5 +22,5 @@ const validateRequest= {
 };
 
 module.exports = {
-    validateRequest
+    validateWebRequest,validatePdfRequest
 }
