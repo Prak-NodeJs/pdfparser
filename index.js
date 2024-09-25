@@ -2,7 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const path = require('path')
 dotenv.config({})
-const { parseRouter } = require('./routes/pdfparse.route')
+const { parseRouter } = require('./routes/parser.route')
 
 const app = express()
 
@@ -11,7 +11,7 @@ app.use(express.json())
 app.use('/file', express.static(path.join(__dirname, 'outputs')));
 
 //route
-app.use('/api',parseRouter )
+app.use('/api',parseRouter)
 
 
 // Handle uncaught exceptions

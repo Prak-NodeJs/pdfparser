@@ -2,11 +2,12 @@ const axios = require('axios');
 const fs = require('fs')
 const unzipper = require('unzipper')
 const path = require('path')
+const cheerio = require('cheerio');
+const { extractData } = require('../middleware/helper');
 
 //extract text, images and link using tika server and stores india respected folder 
 //and create url for viewing extracted content.
-
-const parsePdf = async (req, res, next) => {
+const extractPdf = async (req, res, next) => {
     const { password } = req.body;
     if (!req.file) {
         return res.status(400).json({
@@ -99,6 +100,41 @@ const parsePdf = async (req, res, next) => {
     }
 }
 
+const scrapeWebsiteContent = async (req, res, next)=>{
+    try {
+        const {webUrl}= req.body;
+        const result = await axios.get(webUrl);
+        const $ = cheerio.load(result.data);
+        const html = $.root();
+        let extractedContent = extractData(html[0], '');
+        // Write extracted content to file
+        const fileName = Date.now() + '_extracted_content.txt'; 
+        const outPutPath = path.join(__dirname, '../outputs/', fileName);
+        
+        // Check if the outputs directory exists, if not create it
+        if (!fs.existsSync(path.dirname(outPutPath))) {
+            fs.mkdirSync(outPutPath, { recursive: true });
+        }
+
+        fs.writeFileSync(outPutPath, extractedContent.trim());
+
+        const contentViewUrl = process.env.BASE_URL + '/file/' + fileName
+
+        res.status(200).json({
+            success: true,
+            message: "Website content scrapped successfully.",
+            fileUrl: contentViewUrl
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: 'something went wrong',
+            error: error.message ? error.message : error
+        })
+    }
+}
+
 module.exports = {
-    parsePdf
+    extractPdf,scrapeWebsiteContent
 }

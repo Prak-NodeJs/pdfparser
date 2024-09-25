@@ -1,6 +1,6 @@
 # Pdf Parser.
 
-**Project Summary:**  Extract text, links from password protected pdf and non password protected pdf using apache tika server.
+**Project Summary:**  Extract text, links from password protected pdf and non password protected pdf using apache tika server, scrape any website content as well.
 
 ### Prerequisites
 - Node.js (v20 or later)
@@ -61,10 +61,15 @@ This will start the server at http://localhost:port.
 
 ### Endpoints
 
-**POST /api/parse:**
+**POST /api/pdf/extract:**
    - Extract text, link and images from the pdf and return extracted_text view link.
       Accepts the following parameters in form data:
       - file: Accept only pdf file.
       - password: this is optional parameter, if pdf is password protected then pass password.
+
+**POST /api/website/scrape**
+   - Scrape provided website content and return extracted_content view link.
+      Accepts the following parameters in request body:
+      - webUrl: Valid https url.
 
      
