@@ -49,7 +49,6 @@ const extractPdf = async (req, res, next) => {
             for (const file of directory.files) {
                 const filePath = path.join(outPutPath, file.path);
                 let writeStream;
-
                 if (file.path === '__TEXT__') {
                     //  it's __TEXT__, write it into a .txt file
                     const txtFilePath = path.join(outPutPath, 'extracted_text.txt');
