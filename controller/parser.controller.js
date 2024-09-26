@@ -9,14 +9,14 @@ const { extractData } = require('../middleware/helper');
 //and create url for viewing extracted content.
 const extractPdf = async (req, res, next) => {
     const { password } = req.body;
-    if (!req.file) {
+    if (!req.files) {
         return res.status(400).json({
             status: false,
             message: 'File is required'
         })
     }
-    const pdfFilePath = path.resolve(__dirname, '../uploads/', req.file.filename)
-    const basename = req.file.filename.split('.')[0]
+    const pdfFilePath = path.resolve(__dirname, '../uploads/', req.files.file[0].filename)
+    const basename = req.files.file[0].filename.split('.')[0]
     const parsingData = fs.createReadStream(pdfFilePath)
     //storing tike server api response
     const outputZipFile = path.resolve(__dirname, '../', basename) + '.zip'
